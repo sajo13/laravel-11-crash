@@ -7,6 +7,8 @@ use App\Models\Job as Jobs;
 
 
 Route::get('/', function () {
+
+//    dd( Jobs::all());
     return view('home', [
         'jobs' => Jobs::all()
         ]);

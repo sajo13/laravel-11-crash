@@ -16,4 +16,9 @@ class Job extends Model
     {
         return $this->belongsTo(Employer::class);
     }
+
+    public function Tags(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Tag::class, foreignPivotKey:"job_listing_id");
+    }
 }

@@ -15,9 +15,28 @@ Route::get('/', function () {
 });
 
 Route::get('/jobs', function () {
-    return view('jobs', [
-        'jobs'=> Jobs::with('employer')->simplepaginate(3)
+
+
+    return view('jobs.index', [
+        'jobs'=> Jobs::with('employer')->latest()->simplepaginate(3)
     ]);
+});
+
+Route::get('/jobs/create', function () {
+
+    return view('jobs.create');
+});
+
+Route::post('/jobs', function () {
+    // validation...
+
+    Jobs::create([
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1
+    ]);
+
+    return redirect('/jobs');
 });
 
 
@@ -25,7 +44,7 @@ Route::get('/jobs/{id}', function ($id) {
 
     $job = Jobs::find($id);
 
-    return view('job', ['job' => $job ]);
+    return view('jobs.show', ['job' => $job ]);
 });
 
 

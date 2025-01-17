@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 Route::get('/jobs', function () {
     return view('jobs', [
-        'jobs'=> Jobs::with('employer')->get()
+        'jobs'=> Jobs::with('employer')->simplepaginate(3)
     ]);
 });
 

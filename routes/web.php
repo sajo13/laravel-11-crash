@@ -3,13 +3,27 @@
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateJob;
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::resource('jobs', JobController::class);
+Route::get('test', function () {
+    $job = Job::first();
+
+    if (!$job) {
+        return 'No jobs found!';
+    }
+
+    TranslateJob::dispatch($job);
+
+    return 'Done';
+});
+
+//Job Routes
 Route::get('jobs', [JobController::class, 'index']);
 Route::get('jobs/create', [JobController::class, 'create']);
 Route::post('jobs', [JobController::class, 'store'])->middleware('auth');
